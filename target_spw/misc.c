@@ -353,19 +353,6 @@ void ptimer_stop_and_uart_print(void)
     sprintf(buf, "%u", rtime);
     uart_print(buf);
 }
-
-void ptimer_stop_and_log(void)
-{
-    UINT32 rtime;
-    char buf[31];
-
-    rtime = 0xFFFFFFFF - GET_TIMER_VALUE(TIMER_CH1);
-    // Tick to us
-    rtime = (UINT32)((UINT64)rtime * 2 * 1000000 * PRESCALE_TO_DIV(TIMER_PRESCALE_0) / CLOCK_SPEED);
-    sprintf(buf, "[LATENCY]:%u", rtime);
-    uart_print(buf);
-}
-
 int  __HEAP_START[BYTES_PER_SECTOR]; // 2KB Byte HEAP
 
 caddr_t _sbrk ( int incr )
