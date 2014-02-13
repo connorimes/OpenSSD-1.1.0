@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/OpenSSD-1.1.0" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/OpenSSD-1.1" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/OpenSSD-1.1.0" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/OpenSSD-1.1" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -31,7 +31,90 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="COPYING" />
+		<Unit filename="HISTORY" />
+		<Unit filename="README" />
+		<Unit filename="build_gnu/Makefile" />
+		<Unit filename="build_gnu/build.bat" />
+		<Unit filename="build_gnu/ld_script" />
+		<Unit filename="build_rvds/armcc_opt.via" />
+		<Unit filename="build_rvds/armlink_opt.via" />
+		<Unit filename="build_rvds/build.bat" />
+		<Unit filename="build_rvds/build_DAC.bat" />
+		<Unit filename="build_rvds/build_faster.bat" />
+		<Unit filename="build_rvds/build_greedy.bat" />
+		<Unit filename="build_rvds/build_tutorial.bat" />
+		<Unit filename="build_rvds/file_list.via" />
+		<Unit filename="build_rvds/install.exe" />
+		<Unit filename="build_rvds/scatter.scl" />
+		<Unit filename="clean.bat" />
+		<Unit filename="ftl_greedy/ftl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ftl_greedy/ftl.h" />
+		<Unit filename="include/bank.h" />
+		<Unit filename="include/flash.h" />
+		<Unit filename="include/jasmine.h" />
+		<Unit filename="include/mem_util.h" />
+		<Unit filename="include/nand.h" />
+		<Unit filename="include/peri.h" />
+		<Unit filename="include/rom.h" />
+		<Unit filename="include/sata.h" />
+		<Unit filename="include/sata_cmd.h" />
+		<Unit filename="include/sata_registers.h" />
+		<Unit filename="include/sdram.h" />
+		<Unit filename="include/uart.h" />
+		<Unit filename="installer/ata_7.h" />
+		<Unit filename="installer/installer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="installer/installer.sln" />
+		<Unit filename="installer/installer.vcproj" />
+		<Unit filename="installer/installer.vcproj.ALICE.Administrator.user" />
+		<Unit filename="installer/ntddstor.h" />
+		<Unit filename="release_lock.inc" />
+		<Unit filename="sata/sata_cmd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sata/sata_identify.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sata/sata_isr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sata/sata_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sata/sata_table.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/flash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/flash_wrapper.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/init_gnu.s" />
+		<Unit filename="target_spw/init_rvds.s" />
+		<Unit filename="target_spw/initialize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/mem_util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/misc.h" />
+		<Unit filename="target_spw/shashtbl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target_spw/shashtbl.h" />
+		<Unit filename="target_spw/target.h" />
+		<Unit filename="target_spw/uart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tc/tc_synth.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
