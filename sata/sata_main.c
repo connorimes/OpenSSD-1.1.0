@@ -93,7 +93,9 @@ void Main(void)
 			}
 			else
 			{
+			    ptimer_start();
 				ftl_write(cmd.lba, cmd.sector_count);
+				ptimer_stop_and_log();
 			}
 		}
 		else if (g_sata_context.slow_cmd.status == SLOW_CMD_STATUS_PENDING)
