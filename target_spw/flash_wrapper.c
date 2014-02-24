@@ -246,7 +246,7 @@ void nand_page_ptprogram_from_host(UINT32 const bank, UINT32 const vblock, UINT3
     SETREG(FCP_ROW_L(bank), row);
     SETREG(FCP_ROW_H(bank), row);
 
-    flash_issue_cmd(bank, RETURN_ON_ISSUE);
+    flash_issue_cmd(bank, RETURN_WHEN_DONE);
 
     g_ftl_write_buf_id = (g_ftl_write_buf_id + 1) % NUM_WR_BUFFERS;
 }
