@@ -6,6 +6,8 @@
 #include <sys/stat.h>
 
 #define BLOCK_SIZE 512
+#define WRITE 'w'
+#define READ 'r'
 
 char* create_data(int size, char* data) {
 	while (size-- > 0) {
@@ -32,9 +34,11 @@ int write_dev(const int f, const int size, const int offset) {
 
 	printf("Writing to device\n");
 	const int c_wrote = write(f, data, size);
+	// Must force write to device
+	fsync(f);
 	printf("Wrote %d characters\n", c_wrote);
 
-	// cleanup from malloc in posiz_memalign
+	// cleanup from malloc in posix_memalign
 	free(data);
 	return c_wrote;
 }
@@ -69,8 +73,8 @@ int read_dev(const int f, const int size, const int offset) {
 */
 int main(const int argc, const char* argv[] )
 {
-	if (argc < 4) {
-		fprintf(stderr, "Must pass device path, offset, and data size as arguments\n");
+	if (argc < 5) {
+		fprintf(stderr, "Must pass device path, offset, data size, and o'r' or 'w' as arguments\n");
 		return -1;
 	}
 	// get block device to use
@@ -91,6 +95,8 @@ int main(const int argc, const char* argv[] )
 	}
 	printf("Data size is: %d\n", size);
 
+	const char action = argv[4][0];
+
 	if (access(dev, R_OK | W_OK) == -1) {
 		// device does not exist
 		perror("Device not found or cannot read/write");
@@ -104,15 +110,25 @@ int main(const int argc, const char* argv[] )
 		return -1;
 	}
 
-	const int c_wrote = write_dev(f, size, offset);
-	if (c_wrote != size) {
-		fprintf(stderr, "Write size did not match requested size\n");
+	if (action == WRITE) {
+		// write
+		const int c_wrote = write_dev(f, size, offset);
+		if (c_wrote != size) {
+			fprintf(stderr, "Write size did not match requested size\n");
+		}
+	} else {
+		// read
+		const int c_read = read_dev(f, size, offset);
+		if (c_read != size) {
+			fprintf(stderr, "Read size did not match requested size\n");
+		}
 	}
-	const int c_read = read_dev(f, size, offset);
-	if (c_read != size) {
-		fprintf(stderr, "Read size did not match requested size\n");
-	}
-	// don't forget to close
+
+	// The close causes extra reads that will be captured by UART debug
+	// Let the user complete capture before this happens
+	printf("Complete the debug capture, then press any key to close the device file.\nWarning: This will cause extra reads!\n");
+	getchar();
+
 	printf("Closing device\n");
 	if(close(f) < 0) {
 		perror("Failed to close device file");
