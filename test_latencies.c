@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #define BLOCK_SIZE 512
 #define WRITE 'w'
@@ -32,11 +33,24 @@ int write_dev(const int f, const int size, const int offset) {
 	create_data(size, data);
 	// printf("%s\n", data);
 
+	struct timespec start, end;
+	if (clock_gettime(CLOCK_REALTIME, &start) < 0) {
+		perror("Failed to get clock time start.");
+		return -1;
+	}
+
 	printf("Writing to device\n");
 	const int c_wrote = write(f, data, size);
 	// Must force write to device
 	fsync(f);
-	printf("Wrote %d characters\n", c_wrote);
+
+	if (clock_gettime(CLOCK_REALTIME, &end) < 0) {
+		perror("Failed to get clock time end.");
+		return -1;
+	}
+
+	const long total = (1000000000 * (end.tv_sec - start.tv_sec)) + (end.tv_nsec - start.tv_nsec);
+	printf("Wrote %d characters in %lu ns\n", c_wrote, total);
 
 	// cleanup from malloc in posix_memalign
 	free(data);
@@ -53,6 +67,13 @@ int read_dev(const int f, const int size, const int offset) {
 	int remaining = size;
 	int c_read = 0;
 	char buf[BLOCK_SIZE];
+
+	struct timespec start, end;
+	if (clock_gettime(CLOCK_REALTIME, &start) < 0) {
+		perror("Failed to get clock time start.");
+		return -1;
+	}
+
 	while (remaining > 0) {
 		remaining -= BLOCK_SIZE;
 		// make sure we don't read too much
@@ -64,7 +85,15 @@ int read_dev(const int f, const int size, const int offset) {
 		}
 		// printf("%s\n", buf);
 	}
-	printf("Read %d characters\n", c_read);
+
+	if (clock_gettime(CLOCK_REALTIME, &end) < 0) {
+		perror("Failed to get clock time end.");
+		return -1;
+	}
+
+	const long total = (1000000000 * (end.tv_sec - start.tv_sec)) + (end.tv_nsec - start.tv_nsec);
+	printf("Read %d characters in %lu ns\n", c_read, total);
+
 	return c_read;
 }
 
